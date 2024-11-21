@@ -1,4 +1,5 @@
 # VLSI-DESIGN-FLOW
+In this repository, all vlsi design steps are implemented using open source tools in linux environment and res
 
 # Introduction
 
@@ -10,14 +11,14 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 - **VLSI Design Flow :** Methodology to design an IC such that it delivers the required functionality or behaviour. This process follows the divide and conquer.
 - **Idea to RTL Flow :** It takes a high-level idea or concept of a product and represents the hardware portion of the implementation in RTL. Pre-RTL flow is system level design
-- **RTL to GDS Flow :** It takes an RTL through various stages of logical and physical design steps and finally represents the design as GDS
-- **GDS to chip processes :** It takes a GDS prepares masks for a given GDS and fabricate/ tests / package chips
+- **RTL to GDS Flow :** It takes an RTL through various stages of logical and physical design steps and finally represents the design as GDS file.
+- **GDS to chip processes :** It takes a GDS file and prepares masks for a given GDS and fabricate/ tests / package chips.
 
 ### Terminologies
 
-- RTL : Modelling of circuit as flow of data (signal) between registers
+- **RTL :** Modelling of circuit as flow of data (signal) between registers
 
-- Library:  Timing, area and power information of standard cells and macros 
+- **Library:**  Timing, area and power information of standard cells and macros 
 
 - Constraints: Design goals, expected timing behaviour, enviroment (SDC) 
 
@@ -29,21 +30,13 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 - Output ports: Signals going outside from the design ex:out1,out2.
 
-- Cells: Basic entity delivering combinational or sequential contained in librariesex ANZ, NOT, BUF, DFF design is composed of multiple cells connected together
+- **Cells:** Basic entity delivering combinational or sequential contained in libraries. ex: ANZ, NOT, BUF, DFF design is composed of multiple cells connected together
 
-- Instances: cells when used inside a design are called instances
-Ex:I1, I2, I3, out-reg, out2-reg
-The same cell can be instantiated multiple times
-Ex:out1-reg and out2-reg are instances of the same cell Dff
+- **Instances:** cells when used inside a design are called instances
 
-- Pin: An Interface of a library cell (or) instance through which it communicates with the other components
-ex: A, B, Y are the pins of cell AN2 and the instance I1 Library pin and Instance pin (if we want to be explicit)
-I/p pin or o/p pin based on direction of flow of signal to cell/instance
-Instance pin name typically specified as combination of instance name and pin name seperated by /
-Ex: I1/A,I2/B, anti-reg/Q
+- **Pin:** An Interface of a library cell (or) instance through which it communicates with the other components. Input pin or output pin based on direction of flow of signal to cell/instance
 
-- Nets The wire that connects diff instances and ports is called Nets.
-Ex: N1,N2,N3,.....N8
+- **Nets:** The wire that connects diff instances and ports is called Nets.
 
 # Idea to RTL Flow
 **Pre-RTL Methodologies :**
@@ -59,29 +52,24 @@ Ex: N1,N2,N3,.....N8
 ![image](https://github.com/user-attachments/assets/121f2880-070d-49a9-9f9d-88deda0ea051)
   
 # RTL to GDS Flow
-## Logic Synthesis: 
+## Logic Synthesis 
 
 It is the process by which RTL is converted to an equivalent circuit as inter connection of logic gates (netlist-output) represented using verilog constructs or schematic inputs to synthesis.
-RTL given design (Verilog, VHDL)
 
 ![image](https://github.com/user-attachments/assets/0293331c-f072-4806-ac10-c911eb2a66ed)
 
 
-### RTL Synthesis: 
-Initial part of logic synthesis consisting of translating an RTL to a netlist of generic logic gates.
-•	A generic logic gate has a well defined Boolean function.
-•	ex:AND,NAND,XOR,MUX,latches
+***RTL Synthesis:*** Initial part of logic synthesis consisting of translating an RTL to a netlist of generic logic gates.
+•	A generic logic gate has a well defined Boolean function. ex:AND,NAND,XOR,MUX,latches
 •	It does not have a fixed transistor-level implementation and also not have a well-defined area, delay, power attributes.
 
-### Logic Optimization:
-•	Optimizations on a generic gate netlist 
-•	It is typically area -driven
+***Logic Optimization:*** Optimizations done on a generic gate netlist. It is typically area-driven.
 
-### Technology Mapping:
-•	Map a netlist consisting of generic logic gates to the std cells in the given technology Library and obtain a netlist & stdcells.
-Technology dependent Optimization:
+***Technology Mapping:***
+•	Map a netlist consisting of generic logic gates to the standard cells in the given technology Library and obtain a netlist & stdcells.
+***Technology dependent Optimization:***
 •	PPA can be estimated more accurately after technology mapping
-•	Perform timing, areas Power optimization over netlist of std cells
+•	Perform timing, area, power optimization over netlist of std cells
 
 
 ## Physical Design
@@ -101,40 +89,37 @@ It is the intial step of PD. Designer define the size and shape of die predefine
 
 ### Chip Planning
 
--	first stepin PD major decisions will be taken
--	Partitioning into subsystems (or) blocks
--	Arrange the blocks on the die
--	Allocation of area for the stod cells, macros, memory 
+-	Major decisions will be taken
+-	Partitioning into subsystems (or) blocks and arrange the blocks on the die.
+-	Allocation of area for the standard cells, macros and memory. Macro placement is also done.
 -	Includes IO cell planning and power planning
 -	We should ensure that voltage drop in power line should be within an acceptable limit
 
 ### Placement
--	Decides location of stdcells in the design 
--	Total wire length minimization
--	Ensure timing is met. Reduce the delay of critical path.
--	Ensure no congestion. Placement of std cells is highly automative.
+-	Decides location of standard cells in the design 
+-	Total wire length minimization. Ensure timing is met and reduce the delay of critical path.
+-	Ensure there is no congestion. Placement of std cells is highly automative.
 
 ### CTS
--	Decides topology of clock n/w and how clock reaches each clocked element.
--	CTS also performs wiring of clock n/w (avoid detour since majority of rooting resources are still unused.)
-Objectives ensure minimum skew symmetric structure
-Minimize Pd: clock n/w consumes large fraction of total power CTS consumes 40% of total PD
-Consideration during chip planning.one  voltage drop and another is Congestion.lots of nets are running close together it leads to timing problems routability problems.
+-	Decides topology of clock network and how clock reaches each clocked element.
+-	CTS also performs wiring of clock network (avoid detour since majority of routing resources are still unused.)
 
 ### Routing
-•	Creates wire layout for all the nets (other than clock and power supply) satisfying certain constraints
-•	The objective is use min wire-length, routing area, vias
-•	very Complicated process (too many nets and rating constraint )
+-	Creates wire layout for all the nets (other than clock and power supply) satisfying certain constraints
+-	The objective is use min wire-length, routing area, vias
+-	It is very complicated process (too many nets and routing constraints)
 
 #### Global Routing
-•	Planning stage stage for routing. It is the first stage
-•	Actual layout of wires not created 
-•	A routing plan for a given net is created.
-•	Entire routing region is partitioned into rectangular tiles or global bins.
-•	Global routing assigns a set of global bins that will be used for making connections for a given net.
+-	Planning stage stage for routing. It is the first stage
+-	Actual layout of wires not created 
+-	A routing plan for a given net is created.
+-	Entire routing region is partitioned into rectangular tiles or global bins.
+-	Global routing assigns a set of global bins that will be used for making connections for a given net.
 #### Detailed Routing
-•	Decides actual layat of each net in the pre-assigned global bins.
-•	The detailed router decides the actual physical inter-Connections of nets by: 1.Allocating wires on lach metal layer. 2.vias for Switching between metal layers.
+-	Decides actual layout of each net in the pre-assigned global bins.
+-	The detailed router decides the actual physical inter-connections of nets by
+        1.Allocating wires on each metal layer.
+ 	2.vias for switching between metal layers.
 
 ### ECO 
 Engineering Change Order makes small final fixes in the design.
@@ -143,22 +128,37 @@ Engineering Change Order makes small final fixes in the design.
 Dump the Layouts of each layer in a GDS file.
 
 ### Optimization
-Between each PD task there are optimization steps.
-1. Small changes in the design to improve PPA 
-    -	Buffer insertion on a given net
-    -	changes in the size of a given cell.
-	  - changes in the placement of a given cell.
-    -	change in routing for a given net.
-
-2. Changes are kept small and restricted to a small portions of a design
-    -	Do not Create Large disruption in the design
-    - Design flow should converge
+Between each PD task there are optimization steps. Small changes like buffer insertion on a given net, changing the size and placement of given cell and changing routing for a given net are done in the design to improve PPA. Small changes restricted to a small portions of a design so, that it does not create large disruptions in the design.
 
 ### Iterative flow 
-- PD implementation tasks performed along with verification tasks (timing, power, signal integrity etc.,)
--	PD implementation should ensure design closure(including timing closure)
--	Achieving design closure means that we have achieved state in which everything is fine  in terms of properties that design should satisfy). This is a challenging task
--	Design tasks do not have the full information and works with estimates that can be wrong.
--	PD is iterative One task may require that previous tasks retract same design decisions.This creates loops.
--	Achieving design closure with min no. of iterations is the goal of a PD.
+-    PD implementation tasks performed along with verification tasks (timing, power, signal integrity etc.,)
+-    PD implementation should ensure design closure(including timing closure)
+-    Achieving design closure means that we have achieved state in which everything is fine in terms of properties that design should satisfy). This is a challenging task
+-    PD is iterative. One task may require that previous tasks retract same design decisions.This creates loops.
+-    Achieving design closure with minimum no. of iterations is the goal of a PD.
 
+# BAMBU – High Level Synthesis
+**Objective:** To generate a Verilog file from high level language by using High Level Synthesis 
+**Tool used:**  
+-> Any HLS tool can be used. 
+-> Here, open-source tool Bambu HLS is used 
+**Input files:** C file – tut1.c
+## Steps to perform High Level Synthesis
+- Change to the respective directory where bambu is installed.
+- Bambu is installed in the UNIX system -> `./bambu-0.9.7.App Image`
+- Input the C code for generating Verilog RTL using HLS Tool 
+- Run the Bambu tool by giving C file as input and top fname is func
+- Command : `./bambu-0.9.7.AppImage <path-to-c-file> --top-fname=<accelerator-function-to-be implemented-in-hardware>` 
+- Ex: `./bambu-0.9.7.AppImage tut1.c --top-fname=func`
+
+![image](https://github.com/user-attachments/assets/62046826-7ed2-4334-b455-d95f88e9b330)   ![image](https://github.com/user-attachments/assets/1da2af93-7a0e-4ff0-970d-c661f8d67158)
+
+
+***Figure 1: Running Tool***
+
+Verilog file after synthesis – func.v will be created in the directory after synthesis.
+To open Verilog file – gedit func.v
+
+![image](https://github.com/user-attachments/assets/fad64d7f-f318-4cb1-bf63-567892692109)
+
+***Figure 2: Verilog File after synthesis***
