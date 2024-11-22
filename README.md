@@ -253,15 +253,15 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 ![image](https://github.com/user-attachments/assets/6a45fd64-90e8-47ae-8172-294665ee7eb8)
 
 
-
-https://github.com/Jyothi181/VLSI-DESIGN-FLOW?tab=readme-ov-file#tclscript
-
 # Logic Optimization
 
 **Objective:** To perform the resource sharing and to observe how it leads to decrease in area.
+
 **Resource Sharing:**
+
 if (sel == 1’b0) z = a*b;
 else z=x*y;
+
 ![image](https://github.com/user-attachments/assets/6a8fc46c-8b29-470a-9b86-9e00956c0bd2)
 
 **Tools used:** Yosys (Open SYnthesis Suite)  
