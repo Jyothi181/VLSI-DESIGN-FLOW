@@ -20,15 +20,15 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 - **Library:**  Timing, area and power information of standard cells and macros 
 
-- Constraints: Design goals, expected timing behaviour, enviroment (SDC) 
+- **Constraints:** Design goals, expected timing behaviour, enviroment (SDC) 
 
-- Design: Top level entity that represents the circuit ex:MYDESIGN
+- **Design:** Top level entity that represents the circuit ex:MYDESIGN
 
-- Ports: The interfaces of the design through which it communicates with the external world ex: In1,In2,CLK,out1, out 2 
+- **Ports:** The interfaces of the design through which it communicates with the external world ex: In1,In2,CLK,out1, out 2 
 
-- Input ports: Signals going inside the the design ex In1,In2,CLK 
+- **Input ports:** Signals going inside the the design ex In1,In2,CLK 
 
-- Output ports: Signals going outside from the design ex:out1,out2.
+- **Output ports:** Signals going outside from the design ex:out1,out2.
 
 - **Cells:** Basic entity delivering combinational or sequential contained in libraries. ex: ANZ, NOT, BUF, DFF design is composed of multiple cells connected together
 
@@ -89,35 +89,35 @@ It is the intial step of PD. Designer define the size and shape of die predefine
 
 **Chip Planning***
 
--	Major decisions will be taken
--	Partitioning into subsystems (or) blocks and arrange the blocks on the die.
--	Allocation of area for the standard cells, macros and memory. Macro placement is also done.
--	Includes IO cell planning and power planning
--	We should ensure that voltage drop in power line should be within an acceptable limit
+- Major decisions will be taken
+- Partitioning into subsystems (or) blocks and arrange the blocks on the die.
+- Allocation of area for the standard cells, macros and memory. Macro placement is also done.
+- Includes IO cell planning and power planning
+- We should ensure that voltage drop in power line should be within an acceptable limit
 
 **Placement**
--	Decides location of standard cells in the design 
--	Total wire length minimization. Ensure timing is met and reduce the delay of critical path.
--	Ensure there is no congestion. Placement of std cells is highly automative.
+- Decides location of standard cells in the design 
+- Total wire length minimization. Ensure timing is met and reduce the delay of critical path.
+- Ensure there is no congestion. Placement of std cells is highly automative.
 
 **CTS**
--	Decides topology of clock network and how clock reaches each clocked element.
--	CTS also performs wiring of clock network (avoid detour since majority of routing resources are still unused.)
+- Decides topology of clock network and how clock reaches each clocked element.
+- CTS also performs wiring of clock network (avoid detour since majority of routing resources are still unused.)
 
 **Routing**
--	Creates wire layout for all the nets (other than clock and power supply) satisfying certain constraints
--	The objective is use min wire-length, routing area, vias
--	It is very complicated process (too many nets and routing constraints)
+- Creates wire layout for all the nets (other than clock and power supply) satisfying certain constraints
+- The objective is use min wire-length, routing area, vias
+- It is very complicated process (too many nets and routing constraints)
 
 **Global Routing**
--	Planning stage stage for routing. It is the first stage
--	Actual layout of wires not created 
--	A routing plan for a given net is created.
--	Entire routing region is partitioned into rectangular tiles or global bins.
--	Global routing assigns a set of global bins that will be used for making connections for a given net.
+- Planning stage stage for routing. It is the first stage
+- Actual layout of wires not created 
+- A routing plan for a given net is created.
+- Entire routing region is partitioned into rectangular tiles or global bins.
+- Global routing assigns a set of global bins that will be used for making connections for a given net.
 **Detailed Routing**
--	Decides actual layout of each net in the pre-assigned global bins.
--	The detailed router decides the actual physical inter-connections of nets by
+- Decides actual layout of each net in the pre-assigned global bins.
+- The detailed router decides the actual physical inter-connections of nets by
         1.Allocating wires on each metal layer.
  	2.vias for switching between metal layers.
 
@@ -254,45 +254,157 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 
 
 
-(https://github.com/Jyothi181/VLSI-DESIGN-FLOW?tab=readme-ov-file#tclscript)
+https://github.com/Jyothi181/VLSI-DESIGN-FLOW?tab=readme-ov-file#tclscript
+
+# Logic Optimization
+
+**Objective:** To perform the resource sharing and to observe how it leads to decrease in area.
+**Resource Sharing:**
+if (sel == 1’b0) z = a*b;
+else z=x*y;
+![image](https://github.com/user-attachments/assets/6a8fc46c-8b29-470a-9b86-9e00956c0bd2)
+
+**Tools used:** Yosys (Open SYnthesis Suite)  
+**Input Files:**  
+- Design file: top.v 
+- Yosys script files: opt.tcl, not_opt.tcl 
+- Technology library: toy.lib 
+
+## Unoptimized Synthesis
+
+**Steps to perform Logical Optimization:**
+
+Run the Unoptimized code.
+
+![image](https://github.com/user-attachments/assets/4a28a6db-ea96-424a-bdc3-edfbe0b55179)
+
+Mapping the flipflops and combinational circuits to the cells in our library
+
+![image](https://github.com/user-attachments/assets/51d66c8b-e2ab-43e3-9ec5-925b76af0c51)
+
+`stat -liberty toy.lib`
+
+Design was synthesized It reported the chip area in the library units for unoptimized cells is 13698
+
+![image](https://github.com/user-attachments/assets/85bb5dac-0cc7-4360-abc8-48fbeb5d3386)
+
+Now get the Verilog netlist by writing into a Verilog file.
+
+![image](https://github.com/user-attachments/assets/02030b1e-b78e-4ac7-820d-11e5ff527262)
+
+Netlist was created
+
+![image](https://github.com/user-attachments/assets/d48a922e-1a11-4b70-b871-ea65e5204d27)
+
+Can view the logic diagram using command show
+
+## Optimized Synthesis
+Now perform the optimized synthesis by using following commands
+
+    read_verilog top.v
+    proc
+    clean
+    opt
+    share -aggressive
+    techmap
+    difflibmap -liberty toy.lib
+    abc -liberty toy.lib
+    clean
+    stat -liberty toy.lib
 
 
 
+Design was synthesized and it reported the chip area in the library units for optimized cells is 7451
+
+![image](https://github.com/user-attachments/assets/34b15cad-2b89-4f45-b293-eb102cf83e46)
+
+Get the Verilog netlist by writing into a Verilog file.
+
+`write_verilog -noattr -noexpr -nohex -nodec netlist_final_opt.v`
+
+The chip area and no. of gates of the optimized logic is less than the unoptimized logic. The tool has done resource sharing.
 
 
+# Static Timing Analysis
+
+**Objective:** To analyze and verify the timing performance of digital circuits at the gate level.
 
 
+**Tools used:** OpenSTA. 
 
+**Input Files:**
+- Verilog file (top.v)
+- OpenSTA script file (test.tcl)
+- constraint file (top.sdc)
+- technology library (toy.lib). 
 
+**test.tcl:** 
 
+The script file "test.tcl" contains a series of commands that will be executed by OpenSTA to perform various tasks related to static timing analysis.
 
+Here's a breakdown of the commands commonly found in the "test.tcl" script: 
 
+- read_liberty toy.lib  -> Instructs OpenSTA to read and load the Liberty file "toy.lib".  
+- read_verilog top.v -> Intructs OpenSTA to read and load the Verilog file (gate level verilog netlist) "top.v 
+- link_design top  -> Using "top," which stands for the main module, links the Verilog code with the Liberty timing cells. 
+- read_sdc top.sdc  -> Reads and loads the Synopsys Design Constraints (SDC) file "top.sdc".  
+- report_checks -path_delay max -format full -> Report of the timing checks for the design (setup) 
+- report_checks -path_delay max > reports.txt -> Store the report of the timing checks for the design (setup) in the reports.txt file. 
+- report_checks -path_delay min -format full -> Report of the timing checks for the design (hold)
+- report_checks -path_delay min > reports.txt -> Store the report of the timing checks for the design (hold) in the reports.txt file.
 
+Move the input files top.v, top.sdc, toy.lib, test.tcl into the STA directory
 
+![image](https://github.com/user-attachments/assets/6823fa2b-721d-4400-99e2-2a145f7c36be)
 
+![image](https://github.com/user-attachments/assets/b4f84022-c0c2-4b88-8e26-900c2801f34e)
 
+Top.v
 
+![image](https://github.com/user-attachments/assets/96cf70c6-56e0-4c6f-a6fa-c6e63ae410ac)
+
+Top.sdc
+
+![image](https://github.com/user-attachments/assets/5e355951-cc6c-40bc-8816-8b8df6a22388)
+
+Test.tcl
+
+Source the tcl script file which has commands to read the input files and provide the timing report.
+
+![image](https://github.com/user-attachments/assets/36bb5a31-f90b-4b73-91d0-b038edce8c25)
+
+Individual timing reports can be obtained by using the following commands.
+
+Setup slack -> report_checks -path_delay max -format full
+
+![image](https://github.com/user-attachments/assets/8f66ba79-3ae6-4a5d-8ea6-e338c49b6f9d)
+
+Hold Slack -> `report_checks -path_delay min -format full`
+
+![image](https://github.com/user-attachments/assets/992a2705-385f-49e6-8d00-efd59f4df0ff)
 
 
 # Technology Library
 **Objective:** To understand how delay calculation and Static Timing Analysis (STA) are impacted by Technology Library and Constraints. Impact of Technology library and constraints on delay and also on STA
-Concepts: 
-Non-linear Delay Model (NLDM): Non-Linear Delay Models are used to estimate the delay of signal propagation through various circuit elements, such as interconnects, gates, and wires in a more accurate and complex way compared to linear models.
+
+**Concepts:**
+
+**Non-linear Delay Model (NLDM):** Non-Linear Delay Models are used to estimate the delay of signal propagation through various circuit elements, such as interconnects, gates, and wires in a more accurate and complex way compared to linear models.
 In STA, non-linear delay models are used to estimate the timing of a signal’s path through a circuit, considering the actual behaviour of the gate and interconnect delays.
 These models offer more accurate delay estimations and are key for optimizing performance, meeting timing constraints, and ensuring the robustness of the final chip design.
 
-Constraints: Constraints refer to the requirements, limitations, or conditions that a design must adhere to during the design and optimization process. These constraints guide the layout, timing, power, and functionality of a chip, and they are essential for ensuring that the final product meets all necessary performance, reliability, and manufacturability goals. Ex: Timing, power, area, manufacturing, clock, routing and functional constraints.
+**Constraints:** Constraints refer to the requirements, limitations, or conditions that a design must adhere to during the design and optimization process. These constraints guide the layout, timing, power, and functionality of a chip, and they are essential for ensuring that the final product meets all necessary performance, reliability, and manufacturability goals. Ex: Timing, power, area, manufacturing, clock, routing and functional constraints.
 Some of the constraints are listed below
-• create_clock: to create a clock reference for timing analysis 
-• set_input_delay: to specify the delay in input before reaching the given circuit 
-• set_output_delay: to model change in required time due to external circuit elements 
-• set_input_transition: to specify transition/slew at the input port 
-• set_load: to specify load capacitance at the output port 
-• set_clock_uncertainty: to add pessimism to timing analysis
+- create_clock: to create a clock reference for timing analysis 
+- set_input_delay: to specify the delay in input before reaching the given circuit 
+- set_output_delay: to model change in required time due to external circuit elements 
+- set_input_transition: to specify transition/slew at the input port 
+- set_load: to specify load capacitance at the output port 
+- set_clock_uncertainty: to add pessimism to timing analysis
 
-Requirements:  
-Tool used:  Open STA
-Input files : 
+## Requirements:  
+**Tool used:**  Open STA
+**Input files :** 
 - Design file: test.v 
 - OpenSTA script file: test.tcl 
 - Technology library: toy.lib
@@ -302,22 +414,26 @@ All input files are loaded into the directory.
 ![image](https://github.com/user-attachments/assets/5ec0a94f-8501-426d-90e9-c2f9e0ab10f7)
 
 ![image](https://github.com/user-attachments/assets/3e74ab7d-3780-4db6-b720-4056d129c375)
-test.v
+
+Picture : test.v
 
 ![image](https://github.com/user-attachments/assets/dd712bb4-2663-4202-8ff6-64a66b03455b)
 
-test.tcl
+Picture : test.tcl
 
-From toy.lib
-	C=0.1ff	C=100ff
-Tr=0.1ps	1	80
-Tr=100ps	4	200
+
+|  | C=0.1ff | C=100ff|
+| ------------------ | ---- | --- |
+| Tr=0.1ps | 1 | 80 |  
+| Tr=100ps | 4 | 200 |
+
+Table : toy.lib
 
 Input delay=5ps, slew = 0.1ps, output delay=5ps and CL=100ff
 
 ![image](https://github.com/user-attachments/assets/25477cb0-8cf7-4bb3-b414-6e88afafc52a)
 
-test.sdc
+Picture: test.sdc
 
 Expected Delay: 80 ps
 
@@ -331,60 +447,66 @@ Run OpenSTA by giving input files and study the impact of library, delay, and co
 Input delay – 5, inverter delay 80, data arrival time = 85 
 Clock=1000,  output external delay = 5, data required time = 995
 Slack = Data required time -Data arrival time = 995-85 =910
-![image](https://github.com/user-attachments/assets/fa99bf74-c409-45a9-8ccb-85667826403e)
 
-Input delay – 5, inverter delay 200, data arrival time = 205
-Clock=1000,  output external delay = 5, data required time = 995
-Slack = Data required time -Data arrival time = 995-205 =790
+Similarly the STA analysis is carried out for different values for different parameters and slack increases or decreases accordingly. Here the slack is positive. so, the slack is met.
 
-![image](https://github.com/user-attachments/assets/b59a417b-8727-4a8f-be99-2cc9384e2118)
-
-Input delay – 5, inverter delay 4, data arrival time = 9
-Clock=1000,  output external delay = 5, data required time = 995
-Slack = Data required time -Data arrival time = 995-9 =986
-![image](https://github.com/user-attachments/assets/9a5bc1b6-5c7c-472a-85c9-ed1eaf9b088e)
-Input delay – 25, inverter delay 4, data arrival time = 29
-Clock=1000,  output external delay = 5, data required time = 995
-Slack = Data required time -Data arrival time = 995-29 =966
-![image](https://github.com/user-attachments/assets/2a15e51f-8231-4fd3-8996-ead21e59ac24)
-Input delay – 25, inverter delay 4, data arrival time = 29
-Clock=1000,  output external delay = 35, data required time = 965
-Slack = Data required time -Data arrival time = 965-29 =936
+| input delay | inverter delay | data arrival time | output external delay | slack |
+| ------------------ | ---- | --- | ------ | --------- |
+| 5 | 80 | 85 | 5 | 910 |
+| 5 | 200 | 205 | 5 | 790 |
+| 5 | 4 | 9 | 5 | 986 |
+| 25 | 4 | 29 | 5 | 966 |
+| 25 | 4 | 29 | 35 | 936 |
 
 
 # Power Analysis using Open STA
 
-Objective: To gain a hands-on experience on Power Analysis using OpenSTA.  Run OpenSTA and examine how Power Analysis is done by the tool.
+**Objective:** To examine how Power Analysis is done by the tool.
 
-Concepts: 
-Power Analysis 
-Non-linear Power Model (NLPM)
+**Concepts:** 
+
+**Non-linear Power Model (NLPM)**
+
 ![image](https://github.com/user-attachments/assets/9a6b25f7-e789-49a4-8975-ab06e2d0a1bd)
 
 Average area consumed per transition=(1+2)/2 = 1.5fJ = 1.5 x 10-15𝐽
+
 Clock period = 1000ps
+
 No. of clock cycles per second= 1/1000×10−12=109
+
 Activity=No. of transitions per clock cycles=0.1
+
 No. of transitions per second=0.1 × 109 
+
 Internal power = Energy per transition x number of transition per second=1.5×10−15×0.1×109 = 1.5×10−7 𝑊  
-Switching Power Computation: 
+
+**Switching Power Computation:** 
 Load = 𝐶 = 0.1𝑓𝑓 
+
 Voltage = 1 V 
+
 Energy dissipated in one transition = ½  x 𝐶𝑉2 =0.5×0.1×10−15 ×12 = 5×10−17 J 
+
 No. of transitions per second =0.1 × 109 
-Switching power= 𝐸𝑛𝑒𝑟𝑔𝑦 𝑝𝑒𝑟 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 × 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 𝑝𝑒𝑟 𝑠𝑒𝑐𝑜𝑛𝑑 
-=5×10−17×0.1×109 = 5×10−9 𝑊 
+
+Switching power= 𝐸𝑛𝑒𝑟𝑔𝑦 𝑝𝑒𝑟 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 × 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 𝑝𝑒𝑟 𝑠𝑒𝑐𝑜𝑛𝑑 =5×10−17×0.1×109 = 5×10−9 𝑊 
+
 Leakage Power: From toy.lib 150 × 10−12 = 1.5 × 10−10 𝑊
 
 Input delay = 5ps, slew=0.1ps, output delay=5ps, CL=0.1ff
 
-Requirements:  
-Tool used: OpenSTA
-Files:  
-•	Design file: test.v 
-•	OpenSTA script file: test.tcl 
-•	Technology library: toy.lib
-•	SDC file: test.sdc 
+**Requirements:**  
+
+**Tool used:** OpenSTA
+
+**Input Files:**  
+
+- Design file: test.v 
+- OpenSTA script file: test.tcl 
+- Technology library: toy.lib
+- SDC file: test.sdc 
+
 All input files are loaded into the directory.
 
 ![image](https://github.com/user-attachments/assets/f118deb4-a90e-4041-a91d-28305b79f139)
@@ -420,4 +542,5 @@ We set the Power activity. The dynamic power dissipation depends on how frequent
 
 ![image](https://github.com/user-attachments/assets/6b92214b-5d41-4a87-8e35-9639fe62880f)
 
+Picture : Power Analysis
 
