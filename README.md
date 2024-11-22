@@ -351,3 +351,67 @@ Input delay – 25, inverter delay 4, data arrival time = 29
 Clock=1000,  output external delay = 35, data required time = 965
 Slack = Data required time -Data arrival time = 965-29 =936
 
+
+# Power Analysis using Open STA
+
+Objective: To gain a hands-on experience on Power Analysis using OpenSTA.  Run OpenSTA and examine how Power Analysis is done by the tool.
+
+Concepts: 
+Power Analysis 
+Non-linear Power Model (NLPM)
+![image](https://github.com/user-attachments/assets/9a6b25f7-e789-49a4-8975-ab06e2d0a1bd)
+
+Average area consumed per transition=(1+2)/2 = 1.5fJ = 1.5 x 10-15𝐽
+Clock period = 1000ps
+No. of clock cycles per second= 1/1000×10−12=109
+Activity=No. of transitions per clock cycles=0.1
+No. of transitions per second=0.1 × 109 
+Internal power = Energy per transition x number of transition per second=1.5×10−15×0.1×109 = 1.5×10−7 𝑊  
+Switching Power Computation: 
+Load = 𝐶 = 0.1𝑓𝑓 
+Voltage = 1 V 
+Energy dissipated in one transition = ½  x 𝐶𝑉2 =0.5×0.1×10−15 ×12 = 5×10−17 J 
+No. of transitions per second =0.1 × 109 
+Switching power= 𝐸𝑛𝑒𝑟𝑔𝑦 𝑝𝑒𝑟 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 × 𝑛𝑢𝑚𝑏𝑒𝑟 𝑜𝑓 𝑡𝑟𝑎𝑛𝑠𝑖𝑡𝑖𝑜𝑛 𝑝𝑒𝑟 𝑠𝑒𝑐𝑜𝑛𝑑 
+=5×10−17×0.1×109 = 5×10−9 𝑊 
+Leakage Power: From toy.lib 150 × 10−12 = 1.5 × 10−10 𝑊
+
+Input delay = 5ps, slew=0.1ps, output delay=5ps, CL=0.1ff
+
+Requirements:  
+Tool used: OpenSTA
+Files:  
+•	Design file: test.v 
+•	OpenSTA script file: test.tcl 
+•	Technology library: toy.lib
+•	SDC file: test.sdc 
+All input files are loaded into the directory.
+
+![image](https://github.com/user-attachments/assets/f118deb4-a90e-4041-a91d-28305b79f139)
+test.v
+
+
+![image](https://github.com/user-attachments/assets/1b333a0d-0f99-4d3c-9401-7a07380b6612)
+test.tcl
+
+From toy.lib:
+
+Fall Transition: 
+	C=0.1ff	C=100ff
+Tr=0.1ps	1	2
+Tr=100ps	3	4
+
+Rise Transition:
+	C=0.1ff	C=100ff
+Tr=0.1ps	2	4
+Tr=100ps	6	10
+
+test.sdc
+ 
+![image](https://github.com/user-attachments/assets/f46ffc45-cad8-4824-a356-47e68d7526b9)
+
+We set the Power activity. The dynamic power dissipation depends on how frequently the switching is occurring in the circuit. So, to compute the dynamic power dissipation tool will need to know the activity of the signal. So, if it is not specified tool will assume the default activity in this case, the activity will be 0.1 and tool will report the power based on this.
+
+![image](https://github.com/user-attachments/assets/6b92214b-5d41-4a87-8e35-9639fe62880f)
+
+
