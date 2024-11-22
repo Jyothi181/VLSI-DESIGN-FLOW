@@ -87,7 +87,7 @@ It is the process by which a design in the form of a netlist is converted to an 
 ### Floorplan
 It is the intial step of PD. Designer define the size and shape of die predefined placement information
 
-### Chip Planning
+**Chip Planning***
 
 -	Major decisions will be taken
 -	Partitioning into subsystems (or) blocks and arrange the blocks on the die.
@@ -95,45 +95,44 @@ It is the intial step of PD. Designer define the size and shape of die predefine
 -	Includes IO cell planning and power planning
 -	We should ensure that voltage drop in power line should be within an acceptable limit
 
-### Placement
+**Placement**
 -	Decides location of standard cells in the design 
 -	Total wire length minimization. Ensure timing is met and reduce the delay of critical path.
 -	Ensure there is no congestion. Placement of std cells is highly automative.
 
-### CTS
+**CTS**
 -	Decides topology of clock network and how clock reaches each clocked element.
 -	CTS also performs wiring of clock network (avoid detour since majority of routing resources are still unused.)
 
-### Routing
+**Routing**
 -	Creates wire layout for all the nets (other than clock and power supply) satisfying certain constraints
 -	The objective is use min wire-length, routing area, vias
 -	It is very complicated process (too many nets and routing constraints)
 
-#### Global Routing
+**Global Routing**
 -	Planning stage stage for routing. It is the first stage
 -	Actual layout of wires not created 
 -	A routing plan for a given net is created.
 -	Entire routing region is partitioned into rectangular tiles or global bins.
 -	Global routing assigns a set of global bins that will be used for making connections for a given net.
-#### Detailed Routing
+**Detailed Routing**
 -	Decides actual layout of each net in the pre-assigned global bins.
 -	The detailed router decides the actual physical inter-connections of nets by
         1.Allocating wires on each metal layer.
  	2.vias for switching between metal layers.
 
-### ECO 
+**ECO**
 Engineering Change Order makes small final fixes in the design.
 
-### Write GDS 
+**Write GDS** 
 Dump the Layouts of each layer in a GDS file.
 
-### Optimization
+**Optimization**
 Between each PD task there are optimization steps. Small changes like buffer insertion on a given net, changing the size and placement of given cell and changing routing for a given net are done in the design to improve PPA. Small changes restricted to a small portions of a design so, that it does not create large disruptions in the design.
 
-### Iterative flow 
+**Iterative flow** 
 -    PD implementation tasks performed along with verification tasks (timing, power, signal integrity etc.,)
--    PD implementation should ensure design closure(including timing closure)
--    Achieving design closure means that we have achieved state in which everything is fine in terms of properties that design should satisfy). This is a challenging task
+-    PD implementation should ensure design closure(including timing closure). Achieving design closure means that we have achieved state in which everything is fine in terms of properties.
 -    PD is iterative. One task may require that previous tasks retract same design decisions.This creates loops.
 -    Achieving design closure with minimum no. of iterations is the goal of a PD.
 
@@ -216,7 +215,7 @@ It is obtained that Code coverage is 100%
 
 # Logical Synthesis
 
-**Objective:** To demonstrate working of RTL synthesis tool with an example Verilog code.
+**Objective:** To demonstrate converting of RTL netlist to gate level netlist by using synthesis tool with an example Verilog code.
 
 **Tools used:** Yosys (Open SYnthesis Suite)
 
@@ -229,17 +228,18 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 
 ![image](https://github.com/user-attachments/assets/1e391f01-27a8-44a6-9c94-c4fcf34c3964)
 
-**TCLscript**
+## TCLscript
 - Read modules from Verilog file -> `read_verilog top.v`
 - Elaborate design hierarchy -> `hierarchy −check −top top`
 - Translate processes to netlists -> `proc`
 - Mapping to the internal cell library -> `techmap`
-- Mapping flip−flops to NangateOpenCellLibrary -> `dfflibmap −liberty NangateOpenCellLibrary_typical.lib`
-- Mapping logic to NangateOpenCellLibrary -> `abc −liberty NangateOpenCellLibrary_typical.lib`
+- Mapping flip−flops to toy Library -> `dfflibmap −liberty toy.lib`
+- Mapping logic to toy Library -> `abc −liberty toy.lib`
 - Remove unused cells and wires -> `clean`
 - Write the current design to a Verilog file -> `write_verilog −noattr synth_example.v`
 
-# Steps to perform the logic synthesis
+## Steps to perform the logic synthesis
+
 Launch the Linux distribution and cd to the directory and load the input files in yosys_codes directory.
 ![image](https://github.com/user-attachments/assets/7e16b4c9-8cfb-4a62-b0d6-416542390fdb)
 
@@ -254,7 +254,7 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 
 
 
-
+https://github.com/Jyothi181/VLSI-DESIGN-FLOW/edit/main/README.md#tclscript
 
 
 
@@ -293,10 +293,10 @@ Some of the constraints are listed below
 Requirements:  
 Tool used:  Open STA
 Input files : 
-•	Design file: test.v 
-•	OpenSTA script file: test.tcl 
-•	Technology library: toy.lib
-•	SDC file: test.sdc 
+- Design file: test.v 
+- OpenSTA script file: test.tcl 
+- Technology library: toy.lib
+- SDC file: test.sdc 
 All input files are loaded into the directory.
 
 ![image](https://github.com/user-attachments/assets/5ec0a94f-8501-426d-90e9-c2f9e0ab10f7)
@@ -388,27 +388,33 @@ Files:
 All input files are loaded into the directory.
 
 ![image](https://github.com/user-attachments/assets/f118deb4-a90e-4041-a91d-28305b79f139)
-test.v
+
+Picture : test.v
 
 
 ![image](https://github.com/user-attachments/assets/1b333a0d-0f99-4d3c-9401-7a07380b6612)
-test.tcl
 
-From toy.lib:
+Picture : test.tcl
+
 
 Fall Transition: 
-	C=0.1ff	C=100ff
-Tr=0.1ps	1	2
-Tr=100ps	3	4
+|  | C=0.1ff | C=100ff|
+| ------------------ | ---- | --- |
+| Tr=0.1ps | 1 | 2 |  
+| Tr=100ps | 3 | 4 |
 
 Rise Transition:
-	C=0.1ff	C=100ff
-Tr=0.1ps	2	4
-Tr=100ps	6	10
 
-test.sdc
+|  | C=0.1ff | C=100ff|
+| ------------------ | ---- | --- |
+| Tr=0.1ps | 2 | 4 |  
+| Tr=100ps | 6 | 10 |
+
+Table: toy.lib
  
 ![image](https://github.com/user-attachments/assets/f46ffc45-cad8-4824-a356-47e68d7526b9)
+
+Picture: test.sdc
 
 We set the Power activity. The dynamic power dissipation depends on how frequently the switching is occurring in the circuit. So, to compute the dynamic power dissipation tool will need to know the activity of the signal. So, if it is not specified tool will assume the default activity in this case, the activity will be 0.1 and tool will report the power based on this.
 
