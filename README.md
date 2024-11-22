@@ -254,7 +254,7 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 
 
 
-https://github.com/Jyothi181/VLSI-DESIGN-FLOW/edit/main/README.md#tclscript
+(https://github.com/Jyothi181/VLSI-DESIGN-FLOW?tab=readme-ov-file#tclscript)
 
 
 
