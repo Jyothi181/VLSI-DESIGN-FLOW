@@ -413,11 +413,11 @@ All input files are loaded into the directory.
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture32.png)
 
-![image](https://github.com/user-attachments/assets/3e74ab7d-3780-4db6-b720-4056d129c375)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture33.png?raw=true)
 
 Picture : test.v
 
-![image](https://github.com/user-attachments/assets/dd712bb4-2663-4202-8ff6-64a66b03455b)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture34.png?raw=true)
 
 Picture : test.tcl
 
@@ -431,7 +431,7 @@ Table : toy.lib
 
 Input delay=5ps, slew = 0.1ps, output delay=5ps and CL=100ff
 
-![image](https://github.com/user-attachments/assets/25477cb0-8cf7-4bb3-b414-6e88afafc52a)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture35.png?raw=true)
 
 Picture: test.sdc
 
@@ -440,9 +440,9 @@ Expected Delay: 80 ps
 Change to the respective directory where Open STA is installed.
 Run OpenSTA by giving input files and study the impact of library, delay, and constraints on STA
 
-![image](https://github.com/user-attachments/assets/8c77c65c-5ba1-4dbf-aee5-6f65e120ebbf)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture36.png?raw=true)
 
-![image](https://github.com/user-attachments/assets/c57a2059-f211-4567-a5f5-d9c88014a109)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture37.png?raw=true)
 
 Input delay – 5, inverter delay 80, data arrival time = 85 
 Clock=1000,  output external delay = 5, data required time = 995
@@ -466,8 +466,6 @@ Similarly the STA analysis is carried out for different values for different par
 **Concepts:** 
 
 **Non-linear Power Model (NLPM)**
-
-![image](https://github.com/user-attachments/assets/9a6b25f7-e789-49a4-8975-ab06e2d0a1bd)
 
 Average area consumed per transition=(1+2)/2 = 1.5fJ = 1.5 x 10-15𝐽
 
@@ -509,12 +507,12 @@ Input delay = 5ps, slew=0.1ps, output delay=5ps, CL=0.1ff
 
 All input files are loaded into the directory.
 
-![image](https://github.com/user-attachments/assets/f118deb4-a90e-4041-a91d-28305b79f139)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture38.png?raw=true)
 
 Picture : test.v
 
 
-![image](https://github.com/user-attachments/assets/1b333a0d-0f99-4d3c-9401-7a07380b6612)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture39.png?raw=true)
 
 Picture : test.tcl
 
@@ -534,13 +532,13 @@ Rise Transition:
 
 Table: toy.lib
  
-![image](https://github.com/user-attachments/assets/f46ffc45-cad8-4824-a356-47e68d7526b9)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture40.png?raw=true)
 
 Picture: test.sdc
 
 We set the Power activity. The dynamic power dissipation depends on how frequently the switching is occurring in the circuit. So, to compute the dynamic power dissipation tool will need to know the activity of the signal. So, if it is not specified tool will assume the default activity in this case, the activity will be 0.1 and tool will report the power based on this.
 
-![image](https://github.com/user-attachments/assets/6b92214b-5d41-4a87-8e35-9639fe62880f)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture41.png?raw=true)
 
 Picture : Power Analysis
 
