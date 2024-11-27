@@ -7,7 +7,9 @@ VLSI (Very Large-Scale Integration) Design refers to the process of creating int
 VLSI involves the integration of a large number of electronic components, such as transistors, resistors, capacitors, and other functional blocks, onto a single semiconductor chip. 
 This allows for the creation of complex circuits that are smaller, faster, and more power-efficient than earlier generations.
 
-![image](https://github.com/user-attachments/assets/1d09475a-bc9d-46ab-8077-bec55cdcd649)
+
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture1.png)
+
 
 - **VLSI Design Flow :** Methodology to design an IC such that it delivers the required functionality or behaviour. This process follows the divide and conquer.
 - **Idea to RTL Flow :** It takes a high-level idea or concept of a product and represents the hardware portion of the implementation in RTL. Pre-RTL flow is system level design
@@ -49,15 +51,14 @@ This allows for the creation of complex circuits that are smaller, faster, and m
       - **Behaviour Synthesis :** Automatic method of generating RTL from high-level languages. Process of converting an algorithm (not timed) to an equivalent design in RTL (fully timed) and satisfy the specify constraints.
         It is also called High-level Synthesis
 
-![image](https://github.com/user-attachments/assets/121f2880-070d-49a9-9f9d-88deda0ea051)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture2.png?raw=true)
   
 # RTL to GDS Flow
 ## Logic Synthesis 
 
 It is the process by which RTL is converted to an equivalent circuit as inter connection of logic gates (netlist-output) represented using verilog constructs or schematic inputs to synthesis.
 
-![image](https://github.com/user-attachments/assets/0293331c-f072-4806-ac10-c911eb2a66ed)
-
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture3.png?raw=true)
 
 ***RTL Synthesis:*** Initial part of logic synthesis consisting of translating an RTL to a netlist of generic logic gates.
 •	A generic logic gate has a well defined Boolean function. ex:AND,NAND,XOR,MUX,latches
@@ -75,7 +76,7 @@ It is the process by which RTL is converted to an equivalent circuit as inter co
 ## Physical Design
 It is the process by which a design in the form of a netlist is converted to an equivalent design in the form of layout or GPS(geometrical patterns of masks)
 
-![image](https://github.com/user-attachments/assets/54b19452-efef-46ad-8b38-9d59962b3b9e)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture4.png)
 
 ### Inputs to PD
 
@@ -150,17 +151,16 @@ Between each PD task there are optimization steps. Small changes like buffer ins
 - Command : `./bambu-0.9.7.AppImage <path-to-c-file> --top-fname=<accelerator-function-to-be implemented-in-hardware>` 
 - Ex: `./bambu-0.9.7.AppImage tut1.c --top-fname=func`
 
-![image](https://github.com/user-attachments/assets/62046826-7ed2-4334-b455-d95f88e9b330)   ![image](https://github.com/user-attachments/assets/1da2af93-7a0e-4ff0-970d-c661f8d67158)
-
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture5.png?raw=true)       ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture6.png)
 
 ***Figure 1: Running Tool***
 
 Verilog file after synthesis – func.v will be created in the directory after synthesis.
 To open Verilog file – gedit func.v
 
-![image](https://github.com/user-attachments/assets/fad64d7f-f318-4cb1-bf63-567892692109)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture7.png?raw=true)
 
-***Figure 2: Verilog File after synthesis***
+***Figure : Verilog File after synthesis***
 
 # Verification
 **Objective:** To demonstrate the simulation and the code coverage tool. Also, the working of the tool is explained with an example Verilog code.
@@ -174,9 +174,9 @@ To open Verilog file – gedit func.v
 - Mycounter.v – Verilog code
 - Testbench.v – Testbench
 
-![image](https://github.com/user-attachments/assets/f06a9180-1050-42fc-98f4-eb55b457a543)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture8.png)
 
-![image](https://github.com/user-attachments/assets/ff2ae5ec-4617-4103-b8e1-d43133990117)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture9.png)
 
 ## Simulation and viewing the output waveform
 Launch the Linux distribution. Install Icarus Tool and change directory to icarus_codes . Include input files in the working directory.
@@ -192,7 +192,7 @@ To simulate by launching the iverilog tool, command is
 - It is not convenient to view the output in the command prompt. So waveform analysis tool is used – GTKwave.
 - `gtkwave count.vcd` - This command launches the GTKWave analyzer application.
 
-![image](https://github.com/user-attachments/assets/079d548d-bce2-4ef5-b100-ae58b3e963c3)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture10.png)
 
 ***Figure: Verificaiton - GTK wave***
 
@@ -203,11 +203,11 @@ To estimate the percentage of RTL design tested by the test bench, COVERED Veril
 
 `$ covered score -t Testbench -v Testbench.v -v Mycounter.v -vcd count.vcd -o Mycounter.cdd`
 
-![image](https://github.com/user-attachments/assets/ca95d55e-6fd4-46fa-8eff-310b5bb6854f)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture11.png)
 
 To view the coverage report, execute `$ covered report -d v Mycounter.cdd` The coverage report is displayed in the terminal
 
-![image](https://github.com/user-attachments/assets/8a431775-020f-433d-b695-bc5ccfff9993)  ![image](https://github.com/user-attachments/assets/d9953a72-3fb8-4737-8e59-a848bd7c2503)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture12.png)  ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture13.png)
 
 ***Figure : Code coverage report***
 
@@ -226,7 +226,7 @@ It is obtained that Code coverage is 100%
 
 The Synopsys Design Constraint (SDC) file is not provided, so the synthesized netlist will be mapped for minimum area constraints.
 
-![image](https://github.com/user-attachments/assets/1e391f01-27a8-44a6-9c94-c4fcf34c3964)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture14.png)
 
 ## TCLscript
 - Read modules from Verilog file -> `read_verilog top.v`
@@ -241,16 +241,16 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 ## Steps to perform the logic synthesis
 
 Launch the Linux distribution and cd to the directory and load the input files in yosys_codes directory.
-![image](https://github.com/user-attachments/assets/7e16b4c9-8cfb-4a62-b0d6-416542390fdb)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture15.png)
 
 Launch the yosys tool -> `yosys`
 
-![image](https://github.com/user-attachments/assets/ea13c099-b184-4cba-a2ef-ad283158b751)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture16.png)
 
 You can individually run the commands listed or source tcl file.  yosys> `script yosys_commands.tcl` 
  To view the generated netlist, close the yosys tool with ctrl+Z. To view the netlist: `gedit synth_example .v`
 
-![image](https://github.com/user-attachments/assets/6a45fd64-90e8-47ae-8172-294665ee7eb8)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture17.png)
 
 
 # Logic Optimization
@@ -262,7 +262,7 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 if (sel == 1’b0) z = a*b;
 else z=x*y;
 
-![image](https://github.com/user-attachments/assets/6a8fc46c-8b29-470a-9b86-9e00956c0bd2)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture18.png)
 
 **Tools used:** Yosys (Open SYnthesis Suite)  
 **Input Files:**  
@@ -276,25 +276,25 @@ else z=x*y;
 
 Run the Unoptimized code.
 
-![image](https://github.com/user-attachments/assets/4a28a6db-ea96-424a-bdc3-edfbe0b55179)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture19.png)
 
 Mapping the flipflops and combinational circuits to the cells in our library
 
-![image](https://github.com/user-attachments/assets/51d66c8b-e2ab-43e3-9ec5-925b76af0c51)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture20.png)
 
 `stat -liberty toy.lib`
 
 Design was synthesized It reported the chip area in the library units for unoptimized cells is 13698
 
-![image](https://github.com/user-attachments/assets/85bb5dac-0cc7-4360-abc8-48fbeb5d3386)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture21.png)
 
 Now get the Verilog netlist by writing into a Verilog file.
 
-![image](https://github.com/user-attachments/assets/02030b1e-b78e-4ac7-820d-11e5ff527262)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture22.png)
 
 Netlist was created
 
-![image](https://github.com/user-attachments/assets/d48a922e-1a11-4b70-b871-ea65e5204d27)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture23.png)
 
 Can view the logic diagram using command show
 
@@ -316,7 +316,7 @@ Now perform the optimized synthesis by using following commands
 
 Design was synthesized and it reported the chip area in the library units for optimized cells is 7451
 
-![image](https://github.com/user-attachments/assets/34b15cad-2b89-4f45-b293-eb102cf83e46)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture24.png)
 
 Get the Verilog netlist by writing into a Verilog file.
 
@@ -355,33 +355,33 @@ Here's a breakdown of the commands commonly found in the "test.tcl" script:
 
 Move the input files top.v, top.sdc, toy.lib, test.tcl into the STA directory
 
-![image](https://github.com/user-attachments/assets/6823fa2b-721d-4400-99e2-2a145f7c36be)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture25.png)
 
-![image](https://github.com/user-attachments/assets/b4f84022-c0c2-4b88-8e26-900c2801f34e)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture26.png)
 
 Top.v
 
-![image](https://github.com/user-attachments/assets/96cf70c6-56e0-4c6f-a6fa-c6e63ae410ac)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture27.png)
 
 Top.sdc
 
-![image](https://github.com/user-attachments/assets/5e355951-cc6c-40bc-8816-8b8df6a22388)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture28.png)
 
 Test.tcl
 
 Source the tcl script file which has commands to read the input files and provide the timing report.
 
-![image](https://github.com/user-attachments/assets/36bb5a31-f90b-4b73-91d0-b038edce8c25)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture29.png)
 
 Individual timing reports can be obtained by using the following commands.
 
 Setup slack -> report_checks -path_delay max -format full
 
-![image](https://github.com/user-attachments/assets/8f66ba79-3ae6-4a5d-8ea6-e338c49b6f9d)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture30.png)
 
 Hold Slack -> `report_checks -path_delay min -format full`
 
-![image](https://github.com/user-attachments/assets/992a2705-385f-49e6-8d00-efd59f4df0ff)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture31.png)
 
 
 # Technology Library
@@ -411,7 +411,7 @@ Some of the constraints are listed below
 - SDC file: test.sdc 
 All input files are loaded into the directory.
 
-![image](https://github.com/user-attachments/assets/5ec0a94f-8501-426d-90e9-c2f9e0ab10f7)
+![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture32.png)
 
 ![image](https://github.com/user-attachments/assets/3e74ab7d-3780-4db6-b720-4056d129c375)
 
