@@ -1,7 +1,7 @@
 # VLSI-DESIGN-FLOW
 In this repository, all vlsi design steps are implemented using open source tools in linux environment and few experiments were carried out to get familiar with the design steps.
 
-# Introduction
+# 1. Introduction
 
 VLSI (Very Large-Scale Integration) Design refers to the process of creating integrated circuits (ICs) by combining thousands to millions of transistors on a single chip. 
 VLSI involves the integration of a large number of electronic components, such as transistors, resistors, capacitors, and other functional blocks, onto a single semiconductor chip. 
@@ -16,7 +16,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 - **RTL to GDS Flow :** It takes an RTL through various stages of logical and physical design steps and finally represents the design as GDS file.
 - **GDS to chip processes :** It takes a GDS file and prepares masks for a given GDS and fabricate/ tests / package chips.
 
-### Terminologies
+### 1.1 Terminologies
 
 - **RTL :** Modelling of circuit as flow of data (signal) between registers
 
@@ -40,7 +40,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 - **Nets:** The wire that connects diff instances and ports is called Nets.
 
-# Idea to RTL Flow
+# 1.2 Idea to RTL Flow
 **Pre-RTL Methodologies :**
 1.	**Hardware-Software Partitioning :** Exploit the merits of both hardware and software by choosing right combination of hardware and software to implement a given function.
     Hardware usually runs as parallel circuits and can have very good PPA. Software runs sequentially on a general-purpose processor.
@@ -53,7 +53,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture2.png?raw=true)
   
-# RTL to GDS Flow
+# 1.3 RTL to GDS Flow
 ## Logic Synthesis 
 
 It is the process by which RTL is converted to an equivalent circuit as inter connection of logic gates (netlist-output) represented using verilog constructs or schematic inputs to synthesis.
@@ -73,19 +73,21 @@ It is the process by which RTL is converted to an equivalent circuit as inter co
 •	Perform timing, area, power optimization over netlist of std cells
 
 
-## Physical Design
+## 2. Physical Design
 It is the process by which a design in the form of a netlist is converted to an equivalent design in the form of layout or GPS(geometrical patterns of masks)
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture4.png)
 
-### Inputs to PD
+### 2.1 Inputs to PD
 
 - Netlist input design (olp of logic synthesis)
 - Library similar as in logic synthesis (Liberty).
 - Abstract physical information of cells and technology specific information (LEF)
 - Constraints similar to logic synthesis (SDC)
 
-### Floorplan
+### 2.2 Steps in Physical Design
+
+## Floorplan
 It is the intial step of PD. Designer define the size and shape of die predefined placement information
 
 **Chip Planning***
@@ -137,13 +139,13 @@ Between each PD task there are optimization steps. Small changes like buffer ins
 -    PD is iterative. One task may require that previous tasks retract same design decisions.This creates loops.
 -    Achieving design closure with minimum no. of iterations is the goal of a PD.
 
-# BAMBU – High Level Synthesis
+# 3. BAMBU – High Level Synthesis
 **Objective:** To generate a Verilog file from high level language by using High Level Synthesis 
 **Tool used:**  
 -> Any HLS tool can be used. 
 -> Here, open-source tool Bambu HLS is used 
 **Input files:** C file – tut1.c
-## Steps to perform High Level Synthesis
+## 3.2 Steps to perform High Level Synthesis
 - Change to the respective directory where bambu is installed.
 - Bambu is installed in the UNIX system -> `./bambu-0.9.7.App Image`
 - Input the C code for generating Verilog RTL using HLS Tool 
@@ -162,7 +164,7 @@ To open Verilog file – gedit func.v
 
 ***Figure : Verilog File after synthesis***
 
-# Verification
+# 4. Verification
 **Objective:** To demonstrate the simulation and the code coverage tool. Also, the working of the tool is explained with an example Verilog code.
 
 **Tools used:**
@@ -178,7 +180,7 @@ To open Verilog file – gedit func.v
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture9.png)
 
-## Simulation and viewing the output waveform
+## 4.1 Simulation and viewing the output waveform
 Launch the Linux distribution. Install Icarus Tool and change directory to icarus_codes . Include input files in the working directory.
 - `cd icarus/icarus_codes`
 To simulate by launching the iverilog tool, command is 
@@ -198,7 +200,7 @@ To simulate by launching the iverilog tool, command is
 
 Select the Tesbench-I1 and then select each signal and insert to view the waveforms.In the left panel, expand the Testbench and click on the subfolder. It will expand to show input Clock, Reset and output waveform OUT[3:0]. Drag those to the signals panel and analyze the results.
 
-## Generating the code coverage report: 
+## 4.2 Generating the code coverage report: 
 To estimate the percentage of RTL design tested by the test bench, COVERED Verilog Code Coverage Analyzer tool is used. Generate the code coverage report in the same directory i.e., icarus_codes by executing the following command
 
 `$ covered score -t Testbench -v Testbench.v -v Mycounter.v -vcd count.vcd -o Mycounter.cdd`
@@ -213,7 +215,7 @@ To view the coverage report, execute `$ covered report -d v Mycounter.cdd` The c
 
 It is obtained that Code coverage is 100%
 
-# Logical Synthesis
+# 5. Logical Synthesis
 
 **Objective:** To demonstrate converting of RTL netlist to gate level netlist by using synthesis tool with an example Verilog code.
 
@@ -228,7 +230,7 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture14.png)
 
-## TCLscript
+## 5.2 TCLscript
 - Read modules from Verilog file -> `read_verilog top.v`
 - Elaborate design hierarchy -> `hierarchy −check −top top`
 - Translate processes to netlists -> `proc`
@@ -238,7 +240,7 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 - Remove unused cells and wires -> `clean`
 - Write the current design to a Verilog file -> `write_verilog −noattr synth_example.v`
 
-## Steps to perform the logic synthesis
+## 5.3 Steps to perform the logic synthesis
 
 Launch the Linux distribution and cd to the directory and load the input files in yosys_codes directory.
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture15.png)
@@ -253,7 +255,7 @@ You can individually run the commands listed or source tcl file.  yosys> `script
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture17.png)
 
 
-# Logic Optimization
+# 6. Logic Optimization
 
 **Objective:** To perform the resource sharing and to observe how it leads to decrease in area.
 
@@ -270,7 +272,7 @@ else z=x*y;
 - Yosys script files: opt.tcl, not_opt.tcl 
 - Technology library: toy.lib 
 
-## Unoptimized Synthesis
+## 6.1 Unoptimized Synthesis
 
 **Steps to perform Logical Optimization:**
 
@@ -298,7 +300,7 @@ Netlist was created
 
 Can view the logic diagram using command show
 
-## Optimized Synthesis
+## 6.2 Optimized Synthesis
 Now perform the optimized synthesis by using following commands
 
     read_verilog top.v
@@ -325,7 +327,7 @@ Get the Verilog netlist by writing into a Verilog file.
 The chip area and no. of gates of the optimized logic is less than the unoptimized logic. The tool has done resource sharing.
 
 
-# Static Timing Analysis
+# 7. Static Timing Analysis
 
 **Objective:** To analyze and verify the timing performance of digital circuits at the gate level.
 
@@ -384,7 +386,7 @@ Hold Slack -> `report_checks -path_delay min -format full`
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture31.png)
 
 
-# Technology Library
+# 8. Technology Library
 **Objective:** To understand how delay calculation and Static Timing Analysis (STA) are impacted by Technology Library and Constraints. Impact of Technology library and constraints on delay and also on STA
 
 **Concepts:**
@@ -402,7 +404,7 @@ Some of the constraints are listed below
 - set_load: to specify load capacitance at the output port 
 - set_clock_uncertainty: to add pessimism to timing analysis
 
-## Requirements:  
+## 8.1 Requirements:  
 **Tool used:**  Open STA
 **Input files :** 
 - Design file: test.v 
@@ -459,7 +461,7 @@ Similarly the STA analysis is carried out for different values for different par
 | 25 | 4 | 29 | 35 | 936 |
 
 
-# Power Analysis using Open STA
+# 9. Power Analysis using Open STA
 
 **Objective:** To examine how Power Analysis is done by the tool.
 
