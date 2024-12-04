@@ -16,7 +16,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 - **RTL to GDS Flow :** It takes an RTL through various stages of logical and physical design steps and finally represents the design as GDS file.
 - **GDS to chip processes :** It takes a GDS file and prepares masks for a given GDS and fabricate/ tests / package chips.
 
-### 1.1 Terminologies
+### Terminologies
 
 - **RTL :** Modelling of circuit as flow of data (signal) between registers
 
@@ -40,7 +40,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 - **Nets:** The wire that connects diff instances and ports is called Nets.
 
-# 1.2 Idea to RTL Flow
+# 1.1 Idea to RTL Flow
 **Pre-RTL Methodologies :**
 1.	**Hardware-Software Partitioning :** Exploit the merits of both hardware and software by choosing right combination of hardware and software to implement a given function.
     Hardware usually runs as parallel circuits and can have very good PPA. Software runs sequentially on a general-purpose processor.
@@ -53,7 +53,7 @@ This allows for the creation of complex circuits that are smaller, faster, and m
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture2.png?raw=true)
   
-# 1.3 RTL to GDS Flow
+# 1.2 RTL to GDS Flow
 ## Logic Synthesis 
 
 It is the process by which RTL is converted to an equivalent circuit as inter connection of logic gates (netlist-output) represented using verilog constructs or schematic inputs to synthesis.
