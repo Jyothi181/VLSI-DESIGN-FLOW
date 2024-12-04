@@ -145,7 +145,7 @@ Between each PD task there are optimization steps. Small changes like buffer ins
 -> Any HLS tool can be used. 
 -> Here, open-source tool Bambu HLS is used 
 **Input files:** C file – tut1.c
-## 3.2 Steps to perform High Level Synthesis
+## 3.1 Steps to perform High Level Synthesis
 - Change to the respective directory where bambu is installed.
 - Bambu is installed in the UNIX system -> `./bambu-0.9.7.App Image`
 - Input the C code for generating Verilog RTL using HLS Tool 
@@ -230,7 +230,7 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture14.png)
 
-## 5.2 TCLscript
+## 5.1 TCLscript
 - Read modules from Verilog file -> `read_verilog top.v`
 - Elaborate design hierarchy -> `hierarchy −check −top top`
 - Translate processes to netlists -> `proc`
@@ -240,7 +240,7 @@ The Synopsys Design Constraint (SDC) file is not provided, so the synthesized ne
 - Remove unused cells and wires -> `clean`
 - Write the current design to a Verilog file -> `write_verilog −noattr synth_example.v`
 
-## 5.3 Steps to perform the logic synthesis
+## 5.2 Steps to perform the logic synthesis
 
 Launch the Linux distribution and cd to the directory and load the input files in yosys_codes directory.
 ![image](https://github.com/Jyothi181/VLSI-DESIGN-FLOW/blob/main/Design_Figures/Picture15.png)
