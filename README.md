@@ -13,7 +13,7 @@ VLSI DESIGN FLOW
      - [Inputs to PD](#Inputs-to-PD)
      - [Steps in Physical Design](#Steps-in-Physical-Design)
      - [Floorplan](#Floorplan)
-- [BAMBU- High Level Synthesis](#BAMBU- High-Level-Synthesis)
+- [High Level Synthesis using BAMBU](#High-Level-Synthesis-using-BMABU)
      - [Steps to perform High Level Synthesis](#Steps-to-perform-High-Level-Synthesis)
 - [Verification](#Verification)
      - [Simulation and viewing the output waveform](#Simulation-and-viewing-the-output-waveform)
@@ -168,7 +168,7 @@ Between each PD task there are optimization steps. Small changes like buffer ins
 -    PD is iterative. One task may require that previous tasks retract same design decisions.This creates loops.
 -    Achieving design closure with minimum no. of iterations is the goal of a PD.
 
-# BAMBU – High Level Synthesis
+# High Level Synthesis using BAMBU
 **Objective:** To generate a Verilog file from high level language by using High Level Synthesis 
 **Tool used:**  
 -> Any HLS tool can be used. 
