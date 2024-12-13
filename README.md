@@ -12,7 +12,7 @@ VLSI DESIGN FLOW
   - [Physical Design](#Physical-Design)
      - [Inputs to PD](#Inputs-to-PD)
      - [Steps in Physical Design](#Steps-in-Physical-Design)
-- [High Level Synthesis using BAMBU](#High-Level-Synthesis-using-BMABU)
+- [High Level Synthesis using BAMBU](#High-Level-Synthesis-using-BAMBU)
      - [Steps to perform High Level Synthesis](#Steps-to-perform-High-Level-Synthesis)
 - [Verification](#Verification)
      - [Simulation and viewing the output waveform](#Simulation-and-viewing-the-output-waveform)
